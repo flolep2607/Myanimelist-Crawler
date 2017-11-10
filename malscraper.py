@@ -5,7 +5,9 @@ import threading
 import time
 
 class MALCrawler(object):
-    
+
+    INDEX_URL = 'https://myanimelist.net/topanime.php?limit='
+
     def __init__(self, seed_id):
 
         self.queue_ids = queue.Queue()
@@ -70,17 +72,21 @@ class MALCrawler(object):
         self.processed += 1
         if self.processed % 1000 == 0:
             print('{} animes have been processed')
-            print(self.visited_ids)
+            self.dump_ids()
         print(self.get_name(soup, anime_id))
         print(self.get_recs(soup, anime_id))
 
         self.print_lk.release()
         
-        time.sleep(0.5)
+        time.sleep(0.6)
         
         return True
         
-
+    def dump_ids(self):
+        with open('anime_ids.txt', 'w') as output_file:
+            for anime_id in self.visited_ids:
+                print(anime_id, file=output_file)
+                
     def get_url(self, anime_id):
         
         return 'https://myanimelist.net/anime/{}'.format(anime_id)
