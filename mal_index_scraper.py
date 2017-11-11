@@ -15,7 +15,7 @@ class MALIndexCrawler(object):
         
         self.visited_ids = set()
         
-        self.processed = 0
+        self.processed = 6879
         self.request_headers = {"User-Agent":"Mozilla/5.0"}
         
         self.process_lk = threading.Lock()
@@ -256,6 +256,7 @@ class MALIndexCrawler(object):
             for anchor_tag in anchor_tags:
                 entries.append(anchor_tag.text)
             data = ','.join(entries)
+            
         return data
     
     def get_rank(self, soup):

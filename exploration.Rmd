@@ -1,0 +1,29 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(RMySQL)
+```
+
+```{r}
+db = dbConnect(MySQL(), user='root', password='', dbname='myanimelist', host='localhost')
+```
+
+```{r}
+dbListTables(db)
+```
+
+```{r}
+result = dbSendQuery(db, "select * from animes")
+
+animes = fetch(result, n = -1)
+```
+
+```{r}
+animes %>% filter(rank == 1)
+```
+
